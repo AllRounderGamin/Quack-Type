@@ -1,6 +1,8 @@
 # Quack-Type
 Web extension that adds the support of several friends for every key you press
 
+### Currently, only works for Firefox - This project was made for fun, and I make no promises to update
+
 ## Commands
 
 #### To Activate Quack-Type
