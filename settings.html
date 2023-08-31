@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quack-Type Settings</title>
+    <link href="./stylesheet.css" rel="stylesheet">
+    <script src="settings.js"></script>
+</head>
+<body>
+<h2 class="text">Quack-Type Settings</h2>
+<div class="settings">
+    <div class="settingInput">
+        <label for="volume">Volume</label>
+        <input id="volume" type="range"/>
+    </div>
+    <div class="settingInput">
+        <label for="letters">Play for Letters</label>
+        <input class="check" id="letters" type="checkbox"/>
+    </div>
+    <div class="settingInput">
+        <label for="numbers">Play for Numbers</label>
+        <input class="check" id="numbers" type="checkbox"/>
+    </div>
+    <div class="settingInput">
+        <label for="punctuation">Play for Punctuation / Misc Keys</label>
+        <input class="check" id="punctuation" type="checkbox"/>
+    </div>
+</div>
+<div class="text">
+    <p>Run automatically on all pages? Requires Host Permissions</p>
+    <p id="permissionStatus"></p>
+    <button id="hostPerms" data-granted="false">Toggle Permission</button>
+</div>
+</body>
+</html>

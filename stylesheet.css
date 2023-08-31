@@ -1,0 +1,32 @@
+*{
+    background-color: darkgoldenrod;
+}
+
+label {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+
+#hostPerms{
+    background-color: green;
+}
+
+.settings{
+    display: flex;
+    flex-direction: column;
+}
+
+.settingInput{
+    padding: 0 20px;
+    display: inline-grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+}
+
+.text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
