@@ -38,9 +38,9 @@ async function playQuack(mes) {
   await quack.play();
 }
 
-async function injectScript(e) {
+async function injectScript(Id) {
   if (await browser.permissions.contains({origins: ["<all_urls>"]})) {
-    await browser.scripting.executeScript({files: ["quackType.js"], target: {tabId: e.tabId}})
+    await browser.scripting.executeScript({files: ["quackType.js"], target: {tabId: Id}})
   }
 }
 
@@ -74,5 +74,5 @@ async function setUp() {
 browser.runtime.onInstalled.addListener(setUp);
 browser.runtime.onStartup.addListener(setUp);
 browser.runtime.onMessage.addListener(playQuack);
-browser.tabs.onActivated.addListener(injectScript)
+browser.tabs.onUpdated.addListener(async (tabId) => {await injectScript(tabId)});
 browser.commands.onCommand.addListener(async (command) => {await injectActiveTab(command)});
