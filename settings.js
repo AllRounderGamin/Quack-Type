@@ -1,9 +1,11 @@
 async function addListeners(){
   const settings = await browser.storage.local.get();
 
-  const vol = document.querySelector("#volume")
+  const vol = document.querySelector("#volume");
   vol.value = settings.volume * 100;
-  vol.addEventListener("input", updateVol);
+  const volLabel = document.querySelector("#volLabel");
+  volLabel.textContent = "Volume: " + vol.value + "%";
+  vol.addEventListener("input", (e) => {updateVol(e, volLabel)});
 
   for (const el of document.querySelectorAll(".check")){
     el.checked = settings[el.id];
@@ -11,7 +13,7 @@ async function addListeners(){
   }
 
   const hostPermStatus = await browser.permissions.contains({origins: ["<all_urls>"]});
-  const permissionMessage = document.querySelector("#permissionStatus")
+  const permissionMessage = document.querySelector("#permissionStatus");
   if (hostPermStatus){
     permissionMessage.textContent = "Permissions Granted";
   } else{
@@ -34,10 +36,11 @@ async function updateCheck(e){
   await browser.storage.local.set(settings);
 }
 
-async function updateVol(e){
+async function updateVol(e, label){
   const settings = await browser.storage.local.get();
   settings[e.target.id] = e.target.value / 100;
   await browser.storage.local.set(settings);
+  label.textContent = "Volume: " + e.target.value + "%";
 }
 
 async function togglePerms(e, permissionMessage, permButton){
