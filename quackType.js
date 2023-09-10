@@ -14,7 +14,7 @@ async function queueQuack(e) {
 
 const KEYDICT = {
   " ": 32,
-  "BackSpace": 8,
+  "Backspace": 8,
   "NumLock": 144,
   "Escape": 27,
   "F1": 112,
