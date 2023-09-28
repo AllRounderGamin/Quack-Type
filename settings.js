@@ -6,30 +6,35 @@ async function setup() {
     loadPage(document.querySelector("#MainMenu"), document.querySelector("#PermissionMenu"));
   });
   document.querySelector("#PlaybackBack").addEventListener("click", () => {
-    loadPage(document.querySelector("#PlaybackMenu"), document.querySelector("#MainMenu"))
+    loadPage(document.querySelector("#PlaybackMenu"), document.querySelector("#MainMenu"));
   });
   document.querySelector("#PermissionBack").addEventListener("click", () => {
-    loadPage(document.querySelector("#PermissionMenu"), document.querySelector("#MainMenu"))
+    loadPage(document.querySelector("#PermissionMenu"), document.querySelector("#MainMenu"));
   });
   document.querySelector("#downVol").addEventListener("click", () => {
-    decreaseVol(document.querySelector("#volume"), document.querySelector("#VolLabel"))
+    decreaseVol(document.querySelector("#volume"), document.querySelector("#VolLabel"));
   });
   document.querySelector("#upVol").addEventListener("click", () => {
-    increaseVol(document.querySelector("#volume"), document.querySelector("#VolLabel"))
+    increaseVol(document.querySelector("#volume"), document.querySelector("#VolLabel"));
   });
   document.querySelector("#volume").addEventListener("change", async (e) => {
-    await dragVol(e, document.querySelector("#VolLabel"))
+    await dragVol(e, document.querySelector("#VolLabel"));
   });
   document.querySelector("#letters").addEventListener("click", async () => {
-    await updateOption("letters", document.querySelector("#letters").querySelector(".indicator"))
+    await updateOption("letters", document.querySelector("#LettersIndicator"));
   });
   document.querySelector("#numbers").addEventListener("click", async () => {
-    await updateOption("numbers", document.querySelector("#numbers").querySelector(".indicator"))
+    await updateOption("numbers", document.querySelector("#NumbersIndicator"));
   });
   document.querySelector("#punctuation").addEventListener("click", async () => {
-    await updateOption("punctuation", document.querySelector("#punctuation").querySelector(".indicator"))
+    await updateOption("punctuation", document.querySelector("#PunctuationIndicator"));
   });
-
+  document.querySelector("#mouse").addEventListener("click", async () => {
+    await updateOption("mouse", document.querySelector("#MouseIndicator"));
+  });
+  document.querySelector("#random").addEventListener("click", async () => {
+    await updateOption("random", document.querySelector("#RandomIndicator"));
+  });
 
   const settings = await browser.storage.local.get();
   const buttons = document.querySelectorAll(".largeButton");
@@ -40,9 +45,11 @@ async function setup() {
   }
 
   document.querySelector("#volume").value = settings["volume"] * 100;
-  document.querySelector("#VolLabel"). textContent = "Volume: " + Math.trunc(parseFloat(settings["volume"]) * 100) +"%";
+  document.querySelector("#VolLabel").textContent = "Volume: " + Math.trunc(parseFloat(settings["volume"]) * 100) + "%";
 
-  document.querySelector("#togglePerms").addEventListener("click", async () => {await togglePerms(document.querySelector("#togglePerms").querySelector(".indicator"))});
+  document.querySelector("#togglePerms").addEventListener("click", async () => {
+    await togglePerms(document.querySelector("#togglePerms").querySelector(".indicator"))
+  });
   if (await browser.permissions.contains({origins: ["<all_urls>"]})) {
     document.querySelector("#togglePerms").querySelector(".indicator").classList.add("on");
   }
@@ -59,14 +66,15 @@ async function updateOption(id, indicator) {
   settings[id] = !status;
   if (status) {
     indicator.classList.remove("on");
+    await browser.storage.local.set(settings);
   } else {
     indicator.classList.add("on");
+    await browser.storage.local.set(settings);
     const url = browser.runtime.getURL("./Assets/Quacks/1.mp3");
     const quack = new Audio(url);
     quack.volume = settings.volume;
     await quack.play();
   }
-  await browser.storage.local.set(settings);
 }
 
 async function updateVol(num, label) {
@@ -80,14 +88,14 @@ async function updateVol(num, label) {
   await quack.play();
 }
 
-async function dragVol(e, label){
+async function dragVol(e, label) {
   await updateVol(e.target.value, label);
 }
 
 async function decreaseVol(slider, label) {
   const settings = await browser.storage.local.get();
   const num = parseFloat(settings["volume"]) * 100 - 1;
-  if (num < 0){
+  if (num < 0) {
     return;
   }
   slider.value = num;
@@ -96,8 +104,8 @@ async function decreaseVol(slider, label) {
 
 async function increaseVol(slider, label) {
   const settings = await browser.storage.local.get();
-  const num = parseFloat(settings["volume"]) *100  + 1;
-  if (num > 100){
+  const num = parseFloat(settings["volume"]) * 100 + 1;
+  if (num > 100) {
     return;
   }
   slider.value = num;
@@ -116,4 +124,6 @@ async function togglePerms(indicator) {
 
 }
 
-window.addEventListener("load", async () => {await(setup())});
+window.addEventListener("load", async () => {
+  await (setup())
+});

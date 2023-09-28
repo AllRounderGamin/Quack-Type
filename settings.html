@@ -12,13 +12,13 @@
 
 <div id="MainMenu">
     <h1 class="title">Quack Type Settings</h1>
-    <div class="buttonRow">
-        <button type="button" class="largeButton mainOption" id="PlaybackButton">
-            <img src="Assets/SVG/PlaybackIcon.svg" alt="PlaybackIcon" draggable="false">
+    <div class="buttonRow mainButtons">
+        <button class="largeButton mainOption" id="PlaybackButton" type="button">
+            <img alt="PlaybackIcon" draggable="false" src="Assets/SVG/PlaybackIcon.svg">
             Playback Options
         </button>
-        <button type="button" class="largeButton mainOption" id="PermissionButton">
-            <img src="Assets/SVG/PermissionIcon.svg" alt="PermissionIcon" draggable="false">
+        <button class="largeButton mainOption" id="PermissionButton" type="button">
+            <img alt="PermissionIcon" draggable="false" src="Assets/SVG/PermissionIcon.svg">
             Toggle Permissions
         </button>
     </div>
@@ -26,53 +26,67 @@
 
 <div id="PlaybackMenu">
     <div class="titleArea">
-        <button type="button" class="backArrow" id="PlaybackBack">
-            <img src="Assets/SVG/BackArrow.svg" alt="BackArrow" class="backArrowImg" draggable="false">
+        <button class="backArrow" id="PlaybackBack" type="button">
+            <img alt="BackArrow" class="backArrowImg" draggable="false" src="Assets/SVG/BackArrow.svg">
             Back
         </button>
         <h1 class="title">Quack Type Settings</h1>
     </div>
     <div class="volumeOption">
         <div class="volumeSlider">
-            <button id="downVol" class="volumeButton">
-                <img src="Assets/SVG/DownVol.svg" alt="DownVol" class="volumeImage" draggable="false">
+            <button class="volumeButton" id="downVol">
+                <img alt="DownVol" class="volumeImage" draggable="false" src="Assets/SVG/DownVol.svg">
             </button>
             <input id="volume" type="range">
-            <button id="upVol" class="volumeButton">
-                <img src="Assets/SVG/UpVol.svg" alt="UpVol" class="volumeImage" draggable="false">
+            <button class="volumeButton" id="upVol">
+                <img alt="UpVol" class="volumeImage" draggable="false" src="Assets/SVG/UpVol.svg">
             </button>
         </div>
-        <label for="volume" class="title" id="VolLabel">Volume: 50%</label>
+        <label class="title" for="volume" id="VolLabel">Volume: 50%</label>
     </div>
-    <div class="buttonRow">
-        <button type="button" class="largeButton playbackOption" id="letters">
-            <img src="Assets/SVG/LetterIcon.svg" alt="LetterIcon" draggable="false">
+    <div class="buttonRow playbackButtons">
+        <button class="largeButton" id="letters" type="button">
+            <img alt="LetterIcon" draggable="false" src="Assets/SVG/LetterIcon.svg">
             Letters
             <span class="indicator" id="LettersIndicator"></span>
         </button>
-        <button type="button" class="largeButton playbackOption" id="numbers">
-            <img src="Assets/SVG/NumbersIcon.svg" alt="NumbersIcon" draggable="false">
+        <button class="largeButton" id="numbers" type="button">
+            <img alt="NumbersIcon" draggable="false" src="Assets/SVG/NumbersIcon.svg">
             Numbers
             <span class="indicator" id="NumbersIndicator"></span>
         </button>
-        <button type="button" class="largeButton playbackOption" id="punctuation">
-            <img src="Assets/SVG/MiscIcon.svg" alt="MiscIcon" draggable="false">
+        <button class="largeButton" id="punctuation" type="button">
+            <img alt="MiscIcon" draggable="false" src="Assets/SVG/MiscIcon.svg">
             Misc
             <span class="indicator" id="PunctuationIndicator"></span>
+        </button>
+        <button class="largeButton" id="mouse" type="button">
+            <img alt="MouseIcon" draggable="false" src="Assets/SVG/MouseIcon.svg">
+            Mouse
+            <span class="indicator" id="MouseIndicator"></span>
+        </button>
+        <button class="largeButton" id="random" type="button">
+            <img alt="MouseIcon" draggable="false" src="Assets/SVG/MouseIcon.svg">
+            Random Quacks
+            <span class="indicator" id="RandomIndicator"></span>
+        </button>
+        <button class="largeButton" disabled id="UrlButton" type="button">
+            Coming Soon
         </button>
     </div>
 </div>
 
 <div id="PermissionMenu">
     <div class="titleArea">
-        <button class="backArrow" type="button" id="PermissionBack">
-            <img alt="BackArrow" class="backArrowImg" src="Assets/SVG/BackArrow.svg" draggable="false">
+        <button class="backArrow" id="PermissionBack" type="button">
+            <img alt="BackArrow" class="backArrowImg" draggable="false" src="Assets/SVG/BackArrow.svg">
             Back
         </button>
         <h1 class="title">Quack Type Settings</h1>
     </div>
     <div class="permMenu">
-        <p class="text">Enabling host permissions allows for the extension to run on all updated pages automatically without
+        <p class="text">Enabling host permissions allows for the extension to run on all updated pages automatically
+            without
             using the Ctrl+Q command. Alt+Q will still function as normal</p>
         <p class="text">Enable Host Permissions?</p>
         <button id="togglePerms">

@@ -10,6 +10,10 @@ async function queueQuack(e) {
   await browser.runtime.sendMessage({type: "quack", mes: code});
 }
 
+async function queueClickedQuack() {
+  await browser.runtime.sendMessage({type: "quack", mes: "click"})
+}
+
 
 const KEYDICT = {
   " ": 32,
@@ -49,4 +53,9 @@ const KEYDICT = {
   "AltGraph": 18
 }
 
-window.addEventListener("keyup", queueQuack);
+window.addEventListener("keyup", async (e) => {
+  await queueQuack(e)
+});
+window.addEventListener("click", async (e) => {
+  await queueClickedQuack(e)
+});

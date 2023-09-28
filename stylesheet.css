@@ -1,16 +1,16 @@
-body{
+body {
     background: linear-gradient(to top left, #FF5C00, #FFF502);
     width: 400px;
     height: 400px;
     overflow: hidden;
 }
 
-html{
+html {
     border: black thick solid;
 
 }
 
-.title{
+.title {
     font-size: 24px;
     display: flex;
     flex-direction: column;
@@ -19,18 +19,21 @@ html{
     text-align: center;
 }
 
-.buttonRow{
-    display: flex;
-    flex-direction: row;
-    width:80%;
-    height: 40%;
-    padding: 15% 10%;
+.buttonRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 1fr;
+    grid-gap: 2px;
+    height: 60%;
+    padding: 5% 10%;
 }
 
-.largeButton{
+.largeButton {
     background-color: #FFA902;
     height: 100%;
     width: 100%;
+    min-width: 0;
+    min-height: 0;
     border: black thin solid;
     box-shadow: black 2px 2px;
     margin: 0 1px;
@@ -41,7 +44,7 @@ html{
     font-size: 20px;
 }
 
-.largeButton:active{
+.largeButton:active {
     box-shadow: inset black -2px 2px;
 }
 
@@ -51,13 +54,17 @@ html{
     margin: 5%;
 }
 
-.titleArea{
+.mainButtons {
+    padding: 15% 10%;
+}
+
+.titleArea {
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
 
-.backArrow{
+.backArrow {
     background-color: transparent;
     position: absolute;
     left: 0;
@@ -67,46 +74,46 @@ html{
     font-size: 12px;
 }
 
-.backArrowImg{
+.backArrowImg {
     border: black thin solid;
-    padding:10%;
+    padding: 10%;
 }
 
-.volumeOption{
+.volumeOption {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.volumeSlider{
-    display:flex;
+.volumeSlider {
+    display: flex;
     flex-direction: row;
     padding: 10px;
 }
 
-.volumeButton{
+.volumeButton {
     background-color: #FFA902;
     border: thin black solid;
     box-shadow: black 1px 1px;
 }
 
-.volumeButton:active{
+.volumeButton:active {
     box-shadow: inset black 1px -1px;
 }
 
-.volumeImage{
+.volumeImage {
     height: 90%;
     width: 90%;
     margin: 5%;
 }
 
-#volume{
+#volume {
     accent-color: #FBFF28
 }
 
-.indicator{
-    display:block;
+.indicator {
+    display: block;
     margin: 5px;
     height: 10%;
     width: 40%;
@@ -114,12 +121,12 @@ html{
     background-color: #D0D0CC;
 }
 
-.indicator.on{
+.indicator.on {
     background-color: #FBFF28;
 }
 
-#togglePerms{
-    display:flex;
+#togglePerms {
+    display: flex;
     flex-direction: column;
     align-items: center;
     background-color: #FFA902;
@@ -130,51 +137,51 @@ html{
     box-shadow: black 2px 2px;
 }
 
-#togglePerms .indicator{
+#togglePerms .indicator {
     height: 20%;
 }
 
-#togglePerms:active{
+#togglePerms:active {
     box-shadow: inset black -2px 2px;
 }
 
-.permMenu{
-    display:flex;
+.permMenu {
+    display: flex;
     flex-direction: column;
     align-items: center;
     padding: 10px;
     height: 80%;
 }
 
-.text{
+.text {
     text-align: center;
     font-size: 24px;
     margin: 5px;
 }
 
-#MainMenu{
+#MainMenu {
     width: 100%;
     height: 100%;
-    display:block;
-    position:relative;
-    left:0;
-    top:0;
-}
-
-#PlaybackMenu{
-    width: 100%;
-    height: 100%;
-    display:none;
+    display: block;
     position: relative;
     left: 0;
     top: 0;
 }
 
-#PermissionMenu{
+#PlaybackMenu {
+    width: 100%;
+    height: 100%;
+    display: none;
+    position: relative;
+    left: 0;
+    top: 0;
+}
+
+#PermissionMenu {
     height: 100%;
     width: 100%;
-    display:none;
+    display: none;
     position: relative;
-    left:0;
-    top:0;
+    left: 0;
+    top: 0;
 }
