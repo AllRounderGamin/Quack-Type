@@ -7,29 +7,78 @@
     <script src="settings.js"></script>
 </head>
 <body>
-<h2 class="text">Quack-Type Settings</h2>
-<div class="settings">
-    <div class="settingInput">
-        <label for="volume" id="volLabel">Volume</label>
-        <input id="volume" type="range"/>
-    </div>
-    <div class="settingInput">
-        <label for="letters">Play for Letters</label>
-        <input class="check" id="letters" type="checkbox"/>
-    </div>
-    <div class="settingInput">
-        <label for="numbers">Play for Numbers</label>
-        <input class="check" id="numbers" type="checkbox"/>
-    </div>
-    <div class="settingInput">
-        <label for="punctuation">Play for Punctuation / Misc Keys</label>
-        <input class="check" id="punctuation" type="checkbox"/>
-    </div>
-</div>
-<div class="text">
-    <p>Run automatically on all pages? Requires Host Permissions</p>
-    <p id="permissionStatus"></p>
-    <button id="hostPerms" data-granted="false">Toggle Permission</button>
-</div>
+
 </body>
+
+<div id="MainMenu">
+    <h1 class="title">Quack Type Settings</h1>
+    <div class="buttonRow">
+        <button type="button" class="largeButton mainOption" id="PlaybackButton">
+            <img src="Assets/SVG/PlaybackIcon.svg" alt="PlaybackIcon" draggable="false">
+            Playback Options
+        </button>
+        <button type="button" class="largeButton mainOption" id="PermissionButton">
+            <img src="Assets/SVG/PermissionIcon.svg" alt="PermissionIcon" draggable="false">
+            Toggle Permissions
+        </button>
+    </div>
+</div>
+
+<div id="PlaybackMenu">
+    <div class="titleArea">
+        <button type="button" class="backArrow" id="PlaybackBack">
+            <img src="Assets/SVG/BackArrow.svg" alt="BackArrow" class="backArrowImg" draggable="false">
+            Back
+        </button>
+        <h1 class="title">Quack Type Settings</h1>
+    </div>
+    <div class="volumeOption">
+        <div class="volumeSlider">
+            <button id="downVol" class="volumeButton">
+                <img src="Assets/SVG/DownVol.svg" alt="DownVol" class="volumeImage" draggable="false">
+            </button>
+            <input id="volume" type="range">
+            <button id="upVol" class="volumeButton">
+                <img src="Assets/SVG/UpVol.svg" alt="UpVol" class="volumeImage" draggable="false">
+            </button>
+        </div>
+        <label for="volume" class="title" id="VolLabel">Volume: 50%</label>
+    </div>
+    <div class="buttonRow">
+        <button type="button" class="largeButton playbackOption" id="letters">
+            <img src="Assets/SVG/LetterIcon.svg" alt="LetterIcon" draggable="false">
+            Letters
+            <span class="indicator" id="LettersIndicator"></span>
+        </button>
+        <button type="button" class="largeButton playbackOption" id="numbers">
+            <img src="Assets/SVG/NumbersIcon.svg" alt="NumbersIcon" draggable="false">
+            Numbers
+            <span class="indicator" id="NumbersIndicator"></span>
+        </button>
+        <button type="button" class="largeButton playbackOption" id="punctuation">
+            <img src="Assets/SVG/MiscIcon.svg" alt="MiscIcon" draggable="false">
+            Misc
+            <span class="indicator" id="PunctuationIndicator"></span>
+        </button>
+    </div>
+</div>
+
+<div id="PermissionMenu">
+    <div class="titleArea">
+        <button class="backArrow" type="button" id="PermissionBack">
+            <img alt="BackArrow" class="backArrowImg" src="Assets/SVG/BackArrow.svg" draggable="false">
+            Back
+        </button>
+        <h1 class="title">Quack Type Settings</h1>
+    </div>
+    <div class="permMenu">
+        <p class="text">Enabling host permissions allows for the extension to run on all updated pages automatically without
+            using the Ctrl+Q command. Alt+Q will still function as normal</p>
+        <p class="text">Enable Host Permissions?</p>
+        <button id="togglePerms">
+            <span class="title">Toggle?</span>
+            <span class="indicator" id="permIndicator"></span>
+        </button>
+    </div>
+</div>
 </html>

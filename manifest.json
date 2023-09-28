@@ -4,14 +4,14 @@
   "version": "1.0.2",
   "action": {
     "default_icon": {
-      "16": "./Assets/logo16.svg"
+      "16": "./Assets/Logo/logo16.svg"
     },
     "default_title": "Quack-Type Settings",
     "default_popup": "settings.html"
   },
   "description": "Adds the sounds of ducks to accompany your typing",
   "icons": {
-    "16": "./Assets/logo16.svg"
+    "16": "./Assets/Logo/logo16.svg"
   },
   "permissions": [
     "scripting",

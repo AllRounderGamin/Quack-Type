@@ -4,7 +4,6 @@ async function queueQuack(e) {
     code = e.key.charCodeAt(0);
   } else if (KEYDICT[e.key]) {
     code = KEYDICT[e.key];
-    console.log(code);
   } else {
     code = "human";
   }

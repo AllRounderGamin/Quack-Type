@@ -1,32 +1,180 @@
-*{
-    background-color: darkgoldenrod;
+body{
+    background: linear-gradient(to top left, #FF5C00, #FFF502);
+    width: 400px;
+    height: 400px;
+    overflow: hidden;
 }
 
-label {
-    font-weight: bold;
-    font-size: 20px;
+html{
+    border: black thick solid;
+
 }
 
-
-#hostPerms{
-    background-color: green;
-}
-
-.settings{
-    display: flex;
-    flex-direction: column;
-}
-
-.settingInput{
-    padding: 0 20px;
-    display: inline-grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
-}
-
-.text{
+.title{
+    font-size: 24px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
+}
+
+.buttonRow{
+    display: flex;
+    flex-direction: row;
+    width:80%;
+    height: 40%;
+    padding: 15% 10%;
+}
+
+.largeButton{
+    background-color: #FFA902;
+    height: 100%;
+    width: 100%;
+    border: black thin solid;
+    box-shadow: black 2px 2px;
+    margin: 0 1px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.largeButton:active{
+    box-shadow: inset black -2px 2px;
+}
+
+.largeButton img {
+    height: 50%;
+    width: 50%;
+    margin: 5%;
+}
+
+.titleArea{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.backArrow{
+    background-color: transparent;
+    position: absolute;
+    left: 0;
+    border: 0;
+    padding: 0;
+    margin: 10px 30px 10px 10px;
+    font-size: 12px;
+}
+
+.backArrowImg{
+    border: black thin solid;
+    padding:10%;
+}
+
+.volumeOption{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.volumeSlider{
+    display:flex;
+    flex-direction: row;
+    padding: 10px;
+}
+
+.volumeButton{
+    background-color: #FFA902;
+    border: thin black solid;
+    box-shadow: black 1px 1px;
+}
+
+.volumeButton:active{
+    box-shadow: inset black 1px -1px;
+}
+
+.volumeImage{
+    height: 90%;
+    width: 90%;
+    margin: 5%;
+}
+
+#volume{
+    accent-color: #FBFF28
+}
+
+.indicator{
+    display:block;
+    margin: 5px;
+    height: 10%;
+    width: 40%;
+    box-shadow: inset 1px 1px black;
+    background-color: #D0D0CC;
+}
+
+.indicator.on{
+    background-color: #FBFF28;
+}
+
+#togglePerms{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #FFA902;
+    margin-top: 20px;
+    height: 20%;
+    width: 50%;
+    border: black thin solid;
+    box-shadow: black 2px 2px;
+}
+
+#togglePerms .indicator{
+    height: 20%;
+}
+
+#togglePerms:active{
+    box-shadow: inset black -2px 2px;
+}
+
+.permMenu{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    height: 80%;
+}
+
+.text{
+    text-align: center;
+    font-size: 24px;
+    margin: 5px;
+}
+
+#MainMenu{
+    width: 100%;
+    height: 100%;
+    display:block;
+    position:relative;
+    left:0;
+    top:0;
+}
+
+#PlaybackMenu{
+    width: 100%;
+    height: 100%;
+    display:none;
+    position: relative;
+    left: 0;
+    top: 0;
+}
+
+#PermissionMenu{
+    height: 100%;
+    width: 100%;
+    display:none;
+    position: relative;
+    left:0;
+    top:0;
 }
