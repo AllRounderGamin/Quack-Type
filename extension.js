@@ -3,43 +3,30 @@ async function playQuack(mes) {
     return;
   }
   const settings = await browser.storage.local.get();
-  let checked = false;
   let quackCode;
-  if (mes.mes === "human") {
+  if (mes.mes === "unknown") {
     if (!settings.punctuation) {
       return;
     }
     quackCode = "human";
-    checked = true;
-  }
-  if (mes.mes === "click") {
+  } else if (mes.mes === "click") {
     if (!settings.mouse) {
       return;
     }
     quackCode = "1";
-    checked = true;
-  }
-  if (!checked && (mes.mes >= 65 && mes.mes <= 90) || (mes.mes >= 97 && mes.mes <= 122)) {
+  } else if ((mes.mes >= 65 && mes.mes <= 90) || (mes.mes >= 97 && mes.mes <= 122)) {
     if (!settings.letters) {
       return;
     }
-    checked = true;
-  }
-  if (!checked && (mes.mes >= 48 && mes.mes <= 57)) {
+  } else if ((mes.mes >= 48 && mes.mes <= 57)) {
     if (!settings.numbers) {
       return;
     }
-    checked = true;
-  }
-  if (!checked) {
-    if (!settings.punctuation) {
-      return;
-    }
+  } else if (!settings.punctuation) {
+    return;
   }
   if (!settings.random) {
-    if (mes.mes === "human" || mes.mes === "click") {
-      // do nothing
-    } else {
+    if (mes.mes !== "human" && mes.mes !== "click") {
       quackCode = mes.mes % 8 + 1;
     }
   } else {
@@ -80,10 +67,21 @@ async function setUp() {
   const settings = {volume: 0.5, letters: true, numbers: true, punctuation: true, mouse: false, random: false}
   const opts = ["volume", "letters", "numbers", "punctuation", "mouse", "random"];
   let updated;
+  // On start verifies local storage is up to date and has not been tampered with, if it has sets values to default
   for (let opt of opts) {
     if (!storage.hasOwnProperty(opt)) {
       storage[opt] = settings[opt];
       updated = true;
+    } else if (opt === "volume") {
+      if (storage[opt] > 1 || storage[opt] < 0) {
+        storage[opt] = settings[opt];
+        updated = true;
+      }
+    } else {
+      if (storage[opt] !== true && storage[opt] !== false) {
+        storage[opt] = settings[opt];
+        updated = true;
+      }
     }
   }
   if (updated) {

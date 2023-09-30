@@ -1,4 +1,6 @@
 async function setup() {
+  // Sets up event listeners for all buttons and options as document.querySelector doesnt work after initial setup
+  // Navigation buttons allowing popup to act like a single page application
   document.querySelector("#PlaybackButton").addEventListener("click", () => {
     loadPage(document.querySelector("#MainMenu"), document.querySelector("#PlaybackMenu"));
   });
@@ -11,6 +13,7 @@ async function setup() {
   document.querySelector("#PermissionBack").addEventListener("click", () => {
     loadPage(document.querySelector("#PermissionMenu"), document.querySelector("#MainMenu"));
   });
+  // Volume related buttons
   document.querySelector("#downVol").addEventListener("click", () => {
     decreaseVol(document.querySelector("#volume"), document.querySelector("#VolLabel"));
   });
@@ -20,6 +23,7 @@ async function setup() {
   document.querySelector("#volume").addEventListener("change", async (e) => {
     await dragVol(e, document.querySelector("#VolLabel"));
   });
+  // Option buttons, string is used instead of id as clicking the indicator returns the indicators id
   document.querySelector("#letters").addEventListener("click", async () => {
     await updateOption("letters", document.querySelector("#LettersIndicator"));
   });
@@ -47,6 +51,7 @@ async function setup() {
   document.querySelector("#volume").value = settings["volume"] * 100;
   document.querySelector("#VolLabel").textContent = "Volume: " + Math.trunc(parseFloat(settings["volume"]) * 100) + "%";
 
+  // Permission toggle button
   document.querySelector("#togglePerms").addEventListener("click", async () => {
     await togglePerms(document.querySelector("#togglePerms").querySelector(".indicator"))
   });
@@ -66,32 +71,27 @@ async function updateOption(id, indicator) {
   settings[id] = !status;
   if (status) {
     indicator.classList.remove("on");
-    await browser.storage.local.set(settings);
   } else {
     indicator.classList.add("on");
-    await browser.storage.local.set(settings);
-    const url = browser.runtime.getURL("./Assets/Quacks/1.mp3");
-    const quack = new Audio(url);
-    quack.volume = settings.volume;
-    await quack.play();
+    await playQuack(settings.volume)
   }
+  await browser.storage.local.set(settings);
 }
 
 async function updateVol(num, label) {
   const settings = await browser.storage.local.get();
+  // Extra formatting to prevent classic JS "Volume: 35.000000000001%"
   label.textContent = "Volume: " + Math.trunc(num).toString() + "%";
   settings["volume"] = (num / 100).toFixed(2).toString();
   await browser.storage.local.set(settings);
-  const url = browser.runtime.getURL("./Assets/Quacks/1.mp3");
-  const quack = new Audio(url);
-  quack.volume = settings.volume;
-  await quack.play();
+  await playQuack(settings.volume)
 }
 
 async function dragVol(e, label) {
   await updateVol(e.target.value, label);
 }
 
+// As document.querySelector isn't working post setup have to get new values from storage each time
 async function decreaseVol(slider, label) {
   const settings = await browser.storage.local.get();
   const num = parseFloat(settings["volume"]) * 100 - 1;
@@ -121,7 +121,13 @@ async function togglePerms(indicator) {
     browser.permissions.request({origins: ["<all_urls>"]});
     window.close();
   }
+}
 
+async function playQuack(vol) {
+  const url = browser.runtime.getURL("./Assets/Quacks/1.mp3");
+  const quack = new Audio(url);
+  quack.volume = vol;
+  await quack.play();
 }
 
 window.addEventListener("load", setup);

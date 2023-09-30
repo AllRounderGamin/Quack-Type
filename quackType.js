@@ -1,11 +1,17 @@
 async function queueQuack(e) {
   let code;
+  // charCodeAt only works on single characters, if not a single character refer to the dictionary below
   if (e.key.length === 1) {
     code = e.key.charCodeAt(0);
   } else if (KEYDICT[e.key]) {
     code = KEYDICT[e.key];
   } else {
-    code = "human";
+    code = "unknown";
+  }
+  if (e.key === "AltGraph") {
+    return;
+    // AltGraph is calling both Control and AltGraph at the same time, as this is the only key doing thi disabling it
+    // will stop double quacks and just use Control's quack
   }
   await browser.runtime.sendMessage({type: "quack", mes: code});
 }
@@ -14,6 +20,9 @@ async function queueClickedQuack() {
   await browser.runtime.sendMessage({type: "quack", mes: "click"})
 }
 
+// Use of this dictionary avoids the deprecated e.keyCode, which was used to gather the values initially
+// In early development the win key returned OS, since at least v.1.1.2 it returns Meta, both values are here as a
+// cautionary measure
 
 const KEYDICT = {
   "NumLock": 144,
@@ -49,8 +58,8 @@ const KEYDICT = {
   "ArrowDown": 40,
   "Control": 17,
   "OS": 91,
+  "Meta": 91,
   "Alt": 18,
-  "AltGraph": 18
 }
 
 window.addEventListener("keyup", queueQuack);
