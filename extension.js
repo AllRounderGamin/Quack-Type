@@ -72,7 +72,7 @@ async function injectActiveTab(command) {
 
 function removeQuacks() {
   window.removeEventListener("keyup", queueQuack);
-  window.removeEventListener("click", queueQuack);
+  window.removeEventListener("click", queueClickedQuack);
 }
 
 async function setUp() {
@@ -95,9 +95,5 @@ async function setUp() {
 browser.runtime.onInstalled.addListener(setUp);
 browser.runtime.onStartup.addListener(setUp);
 browser.runtime.onMessage.addListener(playQuack);
-browser.tabs.onUpdated.addListener(async (tabId) => {
-  await injectScript(tabId)
-});
-browser.commands.onCommand.addListener(async (command) => {
-  await injectActiveTab(command)
-});
+browser.tabs.onUpdated.addListener(injectScript);
+browser.commands.onCommand.addListener(injectActiveTab);

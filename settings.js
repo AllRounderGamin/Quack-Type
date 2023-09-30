@@ -124,6 +124,4 @@ async function togglePerms(indicator) {
 
 }
 
-window.addEventListener("load", async () => {
-  await (setup())
-});
+window.addEventListener("load", setup);

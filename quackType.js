@@ -16,8 +16,6 @@ async function queueClickedQuack() {
 
 
 const KEYDICT = {
-  " ": 32,
-  "Backspace": 8,
   "NumLock": 144,
   "Escape": 27,
   "F1": 112,
@@ -32,12 +30,14 @@ const KEYDICT = {
   "F10": 121,
   "F11": 122,
   "F12": 123,
+  "PrintScreen": 44,
   "Insert": 45,
   "Delete": 46,
   "Home": 36,
   "End": 35,
   "PageUp": 33,
   "PageDown": 34,
+  "Backspace": 8,
   "Tab": 9,
   "Enter": 13,
   "ArrowUp": 38,
@@ -53,9 +53,5 @@ const KEYDICT = {
   "AltGraph": 18
 }
 
-window.addEventListener("keyup", async (e) => {
-  await queueQuack(e)
-});
-window.addEventListener("click", async (e) => {
-  await queueClickedQuack(e)
-});
+window.addEventListener("keyup", queueQuack);
+window.addEventListener("click", queueClickedQuack);
