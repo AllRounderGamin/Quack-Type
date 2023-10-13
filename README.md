@@ -34,5 +34,6 @@ random quack!
 
 
 ## Note
-Sometimes the mp3 file will not be recognised, this will result in the sound not playing and an error message in the
-console but the extension will continue working.
+Sometimes the ogg file will not be recognised, this will result in the sound not playing and an error message in the
+console but the extension will continue working. This seems to be a Firefox issue and only seems to happen for the first
+few seconds of a webpage being loaded.

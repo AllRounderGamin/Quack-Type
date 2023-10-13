@@ -32,7 +32,7 @@ async function playQuack(mes) {
   } else {
     quackCode = (Math.round(Math.random() * 100)) % 8 + 1;
   }
-  const url = browser.runtime.getURL("./Assets/Quacks/" + quackCode + ".mp3");
+  const url = browser.runtime.getURL("./Assets/Quacks/" + quackCode + ".ogg");
   const quack = new Audio(url);
   quack.volume = settings.volume;
   await quack.play();
