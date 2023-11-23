@@ -41,7 +41,7 @@ async function setup() {
   });
 
   const settings = await browser.storage.local.get();
-  const buttons = document.querySelectorAll(".largeButton");
+  const buttons = document.querySelectorAll(".quackButton");
   for (let button of buttons) {
     if (settings[button.id]) {
       button.querySelector(".indicator").classList.add("on");

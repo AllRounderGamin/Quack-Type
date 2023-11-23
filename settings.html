@@ -13,11 +13,11 @@
 <div id="MainMenu">
     <h1 class="title">Quack Type Settings</h1>
     <div class="buttonRow mainButtons">
-        <button class="largeButton mainOption" id="PlaybackButton" type="button">
+        <button class="quackButton large mainOption" id="PlaybackButton" type="button">
             <img alt="PlaybackIcon" draggable="false" src="Assets/SVG/PlaybackIcon.svg">
             Playback Options
         </button>
-        <button class="largeButton mainOption" id="PermissionButton" type="button">
+        <button class="quackButton large mainOption" id="PermissionButton" type="button">
             <img alt="PermissionIcon" draggable="false" src="Assets/SVG/PermissionIcon.svg">
             Toggle Permissions
         </button>
@@ -32,7 +32,7 @@
         </button>
         <h1 class="title">Quack Type Settings</h1>
     </div>
-    <div class="volumeOption">
+    <div class="inputFields">
         <div class="volumeSlider">
             <button class="volumeButton" id="downVol">
                 <img alt="DownVol" class="volumeImage" draggable="false" src="Assets/SVG/DownVol.svg">
@@ -45,32 +45,32 @@
         <label class="title" for="volume" id="VolLabel">Volume: 50%</label>
     </div>
     <div class="buttonRow playbackButtons">
-        <button class="largeButton" id="letters" type="button">
+        <button class="quackButton large" id="letters" type="button">
             <img alt="LetterIcon" draggable="false" src="Assets/SVG/LetterIcon.svg">
             Letters
             <span class="indicator" id="LettersIndicator"></span>
         </button>
-        <button class="largeButton" id="numbers" type="button">
+        <button class="quackButton large" id="numbers" type="button">
             <img alt="NumbersIcon" draggable="false" src="Assets/SVG/NumbersIcon.svg">
             Numbers
             <span class="indicator" id="NumbersIndicator"></span>
         </button>
-        <button class="largeButton" id="punctuation" type="button">
+        <button class="quackButton large" id="punctuation" type="button">
             <img alt="MiscIcon" draggable="false" src="Assets/SVG/MiscIcon.svg">
             Misc
             <span class="indicator" id="PunctuationIndicator"></span>
         </button>
-        <button class="largeButton" id="mouse" type="button">
+        <button class="quackButton large" id="mouse" type="button">
             <img alt="MouseIcon" draggable="false" src="Assets/SVG/MouseIcon.svg">
             Mouse
             <span class="indicator" id="MouseIndicator"></span>
         </button>
-        <button class="largeButton" id="random" type="button">
+        <button class="quackButton large" id="random" type="button">
             <img alt="RandomIcon" draggable="false" src="Assets/SVG/RandomIcon.svg">
             Random Quacks
             <span class="indicator" id="RandomIndicator"></span>
         </button>
-        <button class="largeButton" disabled id="UrlButton" type="button">
+        <button class="quackButton large" disabled id="UrlButton" type="button">
             Coming Soon
         </button>
     </div>
@@ -93,6 +93,26 @@
             <span class="title">Toggle?</span>
             <span class="indicator" id="permIndicator"></span>
         </button>
+    </div>
+</div>
+
+<div id="urlFilterPage">
+    <div class="titleArea">
+        <button class="backArrow" id="FilterBack" type="button">
+            <img alt="BackArrow" class="backArrowImg" draggable="false" src="Assets/SVG/BackArrow.svg">
+            Back
+        </button>
+        <h1 class="title">Quack Type Settings</h1>
+    </div>
+    <div class="inputFields">
+        <label for="urlInput">Enter URL to block:</label>
+        <input id="urlInput" type="text"/>
+        <button class="quackButton" id="addUrl">Add URL</button>
+    </div>
+    <div id="urlArea">
+    </div>
+    <div class="inputFields">
+        <button class="quackButton" id="deleteUrl">Delete URL</button>
     </div>
 </div>
 </html>

@@ -28,12 +28,8 @@ html {
     padding: 5% 10%;
 }
 
-.largeButton {
+.quackButton{
     background-color: #FFA902;
-    height: 100%;
-    width: 100%;
-    min-width: 0;
-    min-height: 0;
     border: black thin solid;
     box-shadow: black 2px 2px;
     margin: 0 1px;
@@ -41,14 +37,21 @@ html {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.quackButton.large {
+    height: 100%;
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
     font-size: 20px;
 }
 
-.largeButton:active {
+.quackButton:active {
     box-shadow: inset black -2px 2px;
 }
 
-.largeButton img {
+.quackButton img {
     height: 50%;
     width: 50%;
     margin: 5%;
@@ -79,11 +82,12 @@ html {
     padding: 10%;
 }
 
-.volumeOption {
+.inputFields {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 5px;
 }
 
 .volumeSlider {
@@ -168,7 +172,7 @@ html {
     top: 0;
 }
 
-#PlaybackMenu {
+#PlaybackMenu, #PermissionMenu, #urlFilterPage {
     width: 100%;
     height: 100%;
     display: none;
@@ -177,11 +181,28 @@ html {
     top: 0;
 }
 
-#PermissionMenu {
-    height: 100%;
+
+#urlArea{
+    border: black thin solid;
+    box-shadow: inset black -1px 1px;
+    height: 40%;
+    min-width: 80%;
+    overflow: auto;
+    padding-left: 5%;
+    margin: 0 5%;
+}
+
+#addUrl{
+    margin: 5px 0;
+}
+
+.url{
+    border: black thin solid;
+    margin: 0;
+    height: 1em;
     width: 100%;
-    display: none;
-    position: relative;
-    left: 0;
-    top: 0;
+}
+
+.url.selected{
+    background-color: cadetblue;
 }
