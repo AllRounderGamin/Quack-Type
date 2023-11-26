@@ -188,7 +188,6 @@ html {
     height: 40%;
     min-width: 80%;
     overflow: auto;
-    padding-left: 5%;
     margin: 0 5%;
 }
 
@@ -199,10 +198,23 @@ html {
 .url{
     border: black thin solid;
     margin: 0;
-    height: 1em;
-    width: 100%;
+    height:fit-content;
+    width: 98%;
+    display:flex;
+    align-items: center;
+    padding-left: 5px;
+}
+
+.urlName{
+    user-select: none;
+    word-break: break-all;
 }
 
 .url.selected{
     background-color: cadetblue;
+}
+
+.autoAddOptions{
+    display: flex;
+    flex-direction: row;
 }

@@ -40,18 +40,28 @@ async function playQuack(mes) {
 
 async function injectScript(Id) {
   if (await browser.permissions.contains({origins: ["<all_urls>"]})) {
-    await browser.scripting.executeScript({files: ["quackType.js"], target: {tabId: Id}})
+    const settings = await browser.storage.local.get();
+    let activeTab = await browser.tabs.query({active: true});
+    activeTab = activeTab[0];
+    console.log(activeTab.url, settings.filters.sites);
+    for (let url of settings.filters.sites){
+      if (activeTab.url.includes(url)) {
+        return;
+      }
+    }
+    if (settings.filters.pages.includes(activeTab.url)){
+      return;
+    }
+    await browser.scripting.executeScript({files: ["quackType.js"], target: {tabId: Id}});
   }
 }
 
 async function injectActiveTab(command) {
+  let activeTab = await browser.tabs.query({active: true});
+  activeTab = activeTab[0];
   if (command === "activate-quack") {
-    let activeTab = await browser.tabs.query({active: true})
-    activeTab = activeTab[0];
     await browser.scripting.executeScript({files: ["quackType.js"], target: {tabId: activeTab.id}});
   } else if (command === "deactivate-quack") {
-    let activeTab = await browser.tabs.query({active: true})
-    activeTab = activeTab[0];
     await browser.scripting.executeScript({func: removeQuacks, target: {tabId: activeTab.id}});
   }
 
@@ -64,8 +74,8 @@ function removeQuacks() {
 
 async function setUp() {
   const storage = await browser.storage.local.get()
-  const settings = {volume: 0.5, letters: true, numbers: true, punctuation: true, mouse: false, random: false}
-  const opts = ["volume", "letters", "numbers", "punctuation", "mouse", "random"];
+  const settings = {volume: 0.5, letters: true, numbers: true, punctuation: true, mouse: false, random: false, filters: {pages: [], sites: []}}
+  const opts = ["volume", "letters", "numbers", "punctuation", "mouse", "random", "filters"];
   let updated;
   // On start verifies local storage is up to date and has not been tampered with, if it has sets values to default
   for (let opt of opts) {

@@ -70,8 +70,9 @@
             Random Quacks
             <span class="indicator" id="RandomIndicator"></span>
         </button>
-        <button class="quackButton large" disabled id="UrlButton" type="button">
-            Coming Soon
+        <button class="quackButton large" id="UrlButton" type="button">
+            <img alt="FilterIcon" draggable="false" src="Assets/SVG/FilterIcon.svg">
+            URL Filter
         </button>
     </div>
 </div>
@@ -107,12 +108,24 @@
     <div class="inputFields">
         <label for="urlInput">Enter URL to block:</label>
         <input id="urlInput" type="text"/>
+        <label for="sitewideCheck">Block whole site</label>
+        <input type="checkbox" id="sitewideCheck">
         <button class="quackButton" id="addUrl">Add URL</button>
+        <div class="autoAddOptions">
+            <button class="quackButton" id="addPage">Add Current Page</button>
+            <button class="quackButton" id="addSite">Add Current Site</button>
+        </div>
     </div>
     <div id="urlArea">
     </div>
     <div class="inputFields">
-        <button class="quackButton" id="deleteUrl">Delete URL</button>
+        <button class="quackButton" id="deleteUrl" data-urls="[]">Delete URL</button>
     </div>
 </div>
+
+<template id="urlEntry">
+    <div class="url">
+        <p class="urlName"></p>
+    </div>
+</template>
 </html>
