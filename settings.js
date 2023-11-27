@@ -2,29 +2,33 @@ async function setup() {
   // Sets up event listeners for all buttons and options as document.querySelector doesnt work after initial setup
   // - is there a better way to do this?
 
-  // Now it suddenly  works, cause fuck me i guess, cant wait to change this all until i find out what the fuck caused the issue
-
   // Navigation buttons allowing popup to act like a single page application
-  document.querySelector("#PlaybackButton").addEventListener("click", () => {
-    loadPage(document.querySelector("#MainMenu"), document.querySelector("#PlaybackMenu"));
+  document.querySelector("#QuackButton").addEventListener("click", () => {
+    loadPage(document.querySelector("#MainMenu"), document.querySelector("#QuackMenu"));
   });
   document.querySelector("#PermissionButton").addEventListener("click", () => {
     loadPage(document.querySelector("#MainMenu"), document.querySelector("#PermissionMenu"));
   });
+  document.querySelector("#SpecialButton").addEventListener("click", () => {
+    loadPage(document.querySelector("#MainMenu"), document.querySelector("#SpecialMenu"));
+  });
   document.querySelector("#UrlButton").addEventListener("click", () => {
-    loadPage(document.querySelector("#PlaybackMenu"), document.querySelector("#urlFilterPage"));
+    loadPage(document.querySelector("#SpecialMenu"), document.querySelector("#urlFilterPage"));
   });
   document.querySelector("#UrlButton").addEventListener("click", () => {
     populateUrlPage(document.querySelector("#urlEntry"), document.querySelector("#urlArea"));
   });
-  document.querySelector("#PlaybackBack").addEventListener("click", () => {
-    loadPage(document.querySelector("#PlaybackMenu"), document.querySelector("#MainMenu"));
+  document.querySelector("#QuackBack").addEventListener("click", () => {
+    loadPage(document.querySelector("#QuackMenu"), document.querySelector("#MainMenu"));
   });
   document.querySelector("#PermissionBack").addEventListener("click", () => {
     loadPage(document.querySelector("#PermissionMenu"), document.querySelector("#MainMenu"));
   });
+  document.querySelector("#SpecialBack").addEventListener("click", () => {
+    loadPage(document.querySelector("#SpecialMenu"), document.querySelector("#MainMenu"));
+  });
   document.querySelector("#FilterBack").addEventListener("click", () => {
-    loadPage(document.querySelector("#urlFilterPage"), document.querySelector("#PlaybackMenu"));
+    loadPage(document.querySelector("#urlFilterPage"), document.querySelector("#SpecialMenu"));
   });
   // Volume related buttons
   document.querySelector("#downVol").addEventListener("click", () => {

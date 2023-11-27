@@ -28,6 +28,10 @@ html {
     padding: 5% 10%;
 }
 
+.buttonRow > *:nth-of-type(2n+1):nth-last-of-type(1){
+    grid-column: span 2;
+}
+
 .quackButton{
     background-color: #FFA902;
     border: black thin solid;
@@ -172,7 +176,7 @@ html {
     top: 0;
 }
 
-#PlaybackMenu, #PermissionMenu, #urlFilterPage {
+#QuackMenu, #PermissionMenu, #urlFilterPage, #SpecialMenu {
     width: 100%;
     height: 100%;
     display: none;

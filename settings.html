@@ -13,9 +13,13 @@
 <div id="MainMenu">
     <h1 class="title">Quack Type Settings</h1>
     <div class="buttonRow mainButtons">
-        <button class="quackButton large mainOption" id="PlaybackButton" type="button">
-            <img alt="PlaybackIcon" draggable="false" src="Assets/SVG/PlaybackIcon.svg">
-            Playback Options
+        <button class="quackButton large mainOption" id="QuackButton" type="button">
+            <img alt="QuackIcon" draggable="false" src="Assets/SVG/PlaybackIcon.svg">
+            Quack Options
+        </button>
+        <button class="quackButton large mainOption" id="SpecialButton" type="button">
+            <img alt="SpecialIcon" draggable="false" src="Assets/SVG/SpecialIcon.svg">
+            Special Options
         </button>
         <button class="quackButton large mainOption" id="PermissionButton" type="button">
             <img alt="PermissionIcon" draggable="false" src="Assets/SVG/PermissionIcon.svg">
@@ -24,9 +28,9 @@
     </div>
 </div>
 
-<div id="PlaybackMenu">
+<div id="QuackMenu">
     <div class="titleArea">
-        <button class="backArrow" id="PlaybackBack" type="button">
+        <button class="backArrow" id="QuackBack" type="button">
             <img alt="BackArrow" class="backArrowImg" draggable="false" src="Assets/SVG/BackArrow.svg">
             Back
         </button>
@@ -44,7 +48,7 @@
         </div>
         <label class="title" for="volume" id="VolLabel">Volume: 50%</label>
     </div>
-    <div class="buttonRow playbackButtons">
+    <div class="buttonRow">
         <button class="quackButton large" id="letters" type="button">
             <img alt="LetterIcon" draggable="false" src="Assets/SVG/LetterIcon.svg">
             Letters
@@ -64,15 +68,6 @@
             <img alt="MouseIcon" draggable="false" src="Assets/SVG/MouseIcon.svg">
             Mouse
             <span class="indicator" id="MouseIndicator"></span>
-        </button>
-        <button class="quackButton large" id="random" type="button">
-            <img alt="RandomIcon" draggable="false" src="Assets/SVG/RandomIcon.svg">
-            Random Quacks
-            <span class="indicator" id="RandomIndicator"></span>
-        </button>
-        <button class="quackButton large" id="UrlButton" type="button">
-            <img alt="FilterIcon" draggable="false" src="Assets/SVG/FilterIcon.svg">
-            URL Filter
         </button>
     </div>
 </div>
@@ -95,6 +90,28 @@
             <span class="indicator" id="permIndicator"></span>
         </button>
     </div>
+</div>
+
+<div id="SpecialMenu">
+    <div class="titleArea">
+        <button class="backArrow" id="SpecialBack" type="button">
+            <img alt="BackArrow" class="backArrowImg" draggable="false" src="Assets/SVG/BackArrow.svg">
+            Back
+        </button>
+        <h1 class="title">Quack Type Settings</h1>
+    </div>
+    <div class="buttonRow">
+        <button class="quackButton large" id="random" type="button">
+            <img alt="RandomIcon" draggable="false" src="Assets/SVG/RandomIcon.svg">
+            Randomise Quacks
+            <span class="indicator" id="RandomIndicator"></span>
+        </button>
+        <button class="quackButton large" id="UrlButton" type="button">
+            <img alt="FilterIcon" draggable="false" src="Assets/SVG/FilterIcon.svg">
+            URL Filter
+        </button>
+    </div>
+
 </div>
 
 <div id="urlFilterPage">
