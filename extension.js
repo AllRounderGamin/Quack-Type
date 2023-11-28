@@ -87,6 +87,11 @@ async function setUp() {
         storage[opt] = settings[opt];
         updated = true;
       }
+    } else if (opt === "filters"){
+      if (!storage[opt].hasOwnProperty("pages") || !storage[opt].hasOwnProperty("sites")){
+        storage[opt] = settings[opt];
+        updated = true;
+      }
     } else {
       if (storage[opt] !== true && storage[opt] !== false) {
         storage[opt] = settings[opt];
