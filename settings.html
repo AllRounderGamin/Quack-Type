@@ -101,14 +101,18 @@
         <h1 class="title">Quack Type Settings</h1>
     </div>
     <div class="buttonRow">
-        <button class="quackButton large" id="random" type="button">
-            <img alt="RandomIcon" draggable="false" src="Assets/SVG/RandomIcon.svg">
-            Randomise Quacks
-            <span class="indicator" id="RandomIndicator"></span>
+        <button class="quackButton large" id="MapButton" type="button">
+            <img alt="MappingIcon" draggable="false" src="Assets/SVG/MappingIcon.svg">
+            Button Mapping
         </button>
         <button class="quackButton large" id="UrlButton" type="button">
             <img alt="FilterIcon" draggable="false" src="Assets/SVG/FilterIcon.svg">
             URL Filter
+        </button>
+        <button class="quackButton large" id="random" type="button">
+            <img alt="RandomIcon" draggable="false" src="Assets/SVG/RandomIcon.svg">
+            Randomise Quacks
+            <span class="indicator" id="RandomIndicator"></span>
         </button>
     </div>
 
@@ -136,13 +140,44 @@
     <div id="urlArea">
     </div>
     <div class="inputFields">
-        <button class="quackButton" id="deleteUrl" data-urls="[]">Delete URL</button>
+        <button class="quackButton" id="deleteUrl" data-entries="[]">Delete URL</button>
     </div>
 </div>
 
-<template id="urlEntry">
-    <div class="url">
-        <p class="urlName"></p>
+<div id="MappingMenu">
+    <div class="titleArea">
+        <button class="backArrow" id="MapBack" type="button">
+            <img alt="BackArrow" class="backArrowImg" draggable="false" src="Assets/SVG/BackArrow.svg">
+            Back
+        </button>
+        <h1 class="title">Quack Type Settings</h1>
+    </div>
+    <div class="inputFields">
+        <button class="quackButton" id="mapAdd">Add Filter</button>
+        <p id="mappingMes" hidden>Press key now to add!</p>
+    </div>
+    <div id="MappingArea">
+    </div>
+    <div class="inputFields">
+        <p class="label" >Click to add these buttons:</p>
+        <div class="autoAddOptions">
+            <button class="quackButton" id="escAdd" data-name="Escape">Esc</button>
+            <button class="quackButton" id="prtScAdd" data-name="PrintScreen">PrtSc</button>
+            <button class="quackButton" id="altAdd" data-name="Alt">Alt</button>
+        </div>
+    </div>
+    <div class="inputFields">
+        <p id="listMode" class="label"></p>
+        <div class="autoAddOptions">
+            <button class="quackButton" id="changeMode">Change Mode</button>
+            <button class="quackButton" id="deleteMapping" data-entries="[]">Delete Mapping</button>
+        </div>
+    </div>
+</div>
+
+<template id="dataEntry">
+    <div class="dataType">
+        <p class="dataName"></p>
     </div>
 </template>
 </html>

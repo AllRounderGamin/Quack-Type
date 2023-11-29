@@ -16,7 +16,13 @@ async function setup() {
     loadPage(document.querySelector("#SpecialMenu"), document.querySelector("#urlFilterPage"));
   });
   document.querySelector("#UrlButton").addEventListener("click", () => {
-    populateUrlPage(document.querySelector("#urlEntry"), document.querySelector("#urlArea"));
+    populateUrlPage(document.querySelector("#dataEntry"), document.querySelector("#urlArea"));
+  });
+  document.querySelector("#MapButton").addEventListener("click", () => {
+    loadPage(document.querySelector("#SpecialMenu"), document.querySelector("#MappingMenu"));
+  });
+  document.querySelector("#MapButton").addEventListener("click", () => {
+    populateMappingPage(document.querySelector("#dataEntry"), document.querySelector("#MappingArea"));
   });
   document.querySelector("#QuackBack").addEventListener("click", () => {
     loadPage(document.querySelector("#QuackMenu"), document.querySelector("#MainMenu"));
@@ -29,6 +35,9 @@ async function setup() {
   });
   document.querySelector("#FilterBack").addEventListener("click", () => {
     loadPage(document.querySelector("#urlFilterPage"), document.querySelector("#SpecialMenu"));
+  });
+  document.querySelector("#MapBack").addEventListener("click", () => {
+    loadPage(document.querySelector("#MappingMenu"), document.querySelector("#SpecialMenu"));
   });
   // Volume related buttons
   document.querySelector("#downVol").addEventListener("click", () => {
@@ -59,17 +68,32 @@ async function setup() {
   // filter options
   document.querySelector("#addUrl").addEventListener("click", async () => {
     await addFilter(document.querySelector("#urlInput"), document.querySelector("#sitewideCheck"),
-      document.querySelector("#urlEntry"), document.querySelector("#urlArea"));
+      document.querySelector("#dataEntry"), document.querySelector("#urlArea"));
   });
   document.querySelector("#addPage").addEventListener("click", async () => {
-    await autoAddFilter("page", document.querySelector("#urlEntry"), document.querySelector("#urlArea"));
+    await autoAddFilter("page", document.querySelector("#dataEntry"), document.querySelector("#urlArea"));
   });
   document.querySelector("#addSite").addEventListener("click", async () => {
-    await autoAddFilter("site", document.querySelector("#urlEntry"), document.querySelector("#urlArea"));
+    await autoAddFilter("site", document.querySelector("#dataEntry"), document.querySelector("#urlArea"));
   });
   document.querySelector("#deleteUrl").addEventListener("click", async () => {
-    await deleteUrl(document.querySelector("#deleteUrl"), document.querySelector("#urlArea"))
-  })
+    await deleteUrls(document.querySelector("#deleteUrl"), document.querySelector("#urlArea"));
+  });
+  document.querySelector("#deleteMapping").addEventListener("click", async () => {
+    await deleteMappings(document.querySelector("#deleteMapping"), document.querySelector("#MappingArea"));
+  });
+  document.querySelector("#changeMode").addEventListener("click", changeListMode);
+  document.querySelector("#mapAdd").addEventListener("click", addMapping);
+
+  document.querySelector("#escAdd").addEventListener("click", async () => {
+    await updateMapping({key: "Escape"});
+  });
+  document.querySelector("#prtScAdd").addEventListener("click", async () => {
+    await updateMapping({key: "PrintScreen"});
+  });
+  document.querySelector("#altAdd").addEventListener("click", async () => {
+    await updateMapping({key: "Alt"});
+  });
 
 
   const settings = await browser.storage.local.get();
@@ -162,7 +186,7 @@ async function populateUrlPage(template, inputArea) {
     inputArea.removeChild(inputArea.firstChild);
   }
   for (let url of urlList) {
-    makeUrlEntry(url, template, inputArea);
+    makeDataEntry(url, template, inputArea, "urlArea", document.querySelector("#deleteUrl"));
   }
 }
 
@@ -176,7 +200,7 @@ async function addFilter(input, checkbox, template, inputArea) {
   } else {
     settings.filters.pages.push(input.value);
   }
-  makeUrlEntry(input.value, template, inputArea)
+  makeDataEntry(input.value, template, inputArea, "urlArea", document.querySelector("#deleteUrl"));
   await browser.storage.local.set(settings);
   await playQuack(settings.volume);
 }
@@ -192,42 +216,42 @@ async function autoAddFilter(filterType, template, inputArea) {
       return;
     }
     settings.filters.sites.push(url);
-    makeUrlEntry(url, template, inputArea);
+    makeDataEntry(url, template, inputArea, "urlArea", document.querySelector("#deleteUrl"));
   } else {
     if (settings.filters.sites.includes(activeTab.url) || settings.filters.pages.includes(activeTab.url)) {
       return;
     }
     settings.filters.pages.push(activeTab.url);
-    makeUrlEntry(activeTab.url, template, inputArea);
+    makeDataEntry(activeTab.url, template, inputArea, "urlArea", document.querySelector("#deleteUrl"));
   }
   await browser.storage.local.set(settings);
   await playQuack(settings.volume);
 }
 
-function makeUrlEntry(name, template, inputArea) {
+function makeDataEntry(name, template, inputArea, target, delButton) {
   const entry = template.content.cloneNode(true);
-  entry.querySelector(".urlName").textContent = name;
-  entry.querySelector(".url").addEventListener("click", (e) => {
-    selectUrlEntry(e, document.querySelector("#deleteUrl"), document.querySelector("#urlArea"))
+  entry.querySelector(".dataName").textContent = name;
+  entry.querySelector(".dataType").addEventListener("click", (e) => {
+    selectDataEntry(e, delButton, document.querySelector(`#${target}`))
   });
   inputArea.prepend(entry);
 }
 
-function selectUrlEntry(e, delButton, inputArea) {
+function selectDataEntry(e, delButton, inputArea) {
   let target;
-  if (e.target.classList.contains("urlName")) {
+  if (e.target.classList.contains("dataName")) {
     target = e.target.parentElement;
   } else {
     target = e.target;
   }
-  let list = JSON.parse(delButton.dataset["urls"]);
+  let list = JSON.parse(delButton.dataset["entries"]);
   if (target.classList.contains("selected")) {
     target.classList.remove("selected");
     list.splice(list.indexOf(target), 1);
   } else {
     if (e.ctrlKey) {
       target.classList.add("selected");
-      list.push(target.querySelector(".urlName").textContent);
+      list.push(target.querySelector(".dataName").textContent);
     } else {
       if (list.length > 0){
         for (let node of inputArea.querySelectorAll("div")){
@@ -237,16 +261,15 @@ function selectUrlEntry(e, delButton, inputArea) {
         }
       }
       target.classList.add("selected");
-      list = [target.querySelector(".urlName").textContent];
+      list = [target.querySelector(".dataName").textContent];
     }
   }
-  console.log(list);
-  delButton.dataset["urls"] = JSON.stringify(list);
+  delButton.dataset["entries"] = JSON.stringify(list);
 }
 
-async function deleteUrl(delButton, inputArea) {
+async function deleteUrls(delButton, inputArea) {
   const settings = await browser.storage.local.get();
-  const urls = JSON.parse(delButton.dataset["urls"]);
+  const urls = await JSON.parse(delButton.dataset["entries"]);
   if (urls.length === 0){
     return;
   }
@@ -262,10 +285,76 @@ async function deleteUrl(delButton, inputArea) {
       inputArea.removeChild(node);
     }
   }
-  delButton.dataset["urls"] = "[]";
+  delButton.dataset["entries"] = "[]";
   await browser.storage.local.set(settings);
 }
 
+async function deleteMappings(delButton, inputArea) {
+  const settings = await browser.storage.local.get();
+  const mappings = await JSON.parse(delButton.dataset["entries"]);
+  if (mappings.length === 0){
+    return;
+  }
+  for (let mapping of mappings) {
+    for (let filter of settings.mappings) {
+      if (filter.key === mapping) {
+        settings.mappings.splice(settings.mappings.indexOf(filter), 1);
+      }
+    }
+  }
+  for (let node of inputArea.querySelectorAll("div")) {
+    if (node.classList.contains("selected")) {
+      inputArea.removeChild(node);
+    }
+  }
+  delButton.dataset["entries"] = "[]";
+  await browser.storage.local.set(settings);
+}
+
+async function populateMappingPage(template, inputArea) {
+  const settings = await browser.storage.local.get();
+  while (inputArea.hasChildNodes()) {
+    inputArea.removeChild(inputArea.firstChild);
+  }
+  for (let mapping of settings.mappings) {
+    makeDataEntry(mapping.key, template, inputArea, "MappingArea", document.querySelector("#deleteMapping"));
+  }
+  if (settings.whitelist){
+    document.querySelector("#listMode").textContent = "Current Mode: Whitelist";
+  } else {
+    document.querySelector("#listMode").textContent = "Current Mode: Blacklist";
+  }
+}
+
+async function addMapping(){
+  document.querySelector("#mappingMes").hidden = false;
+  document.addEventListener("keydown", updateMapping);
+}
+
+async function updateMapping(e){
+  const template = document.querySelector("#dataEntry");
+  const mapArea = document.querySelector("#MappingArea");
+  const settings = await browser.storage.local.get();
+  if (!settings.mappings.includes(e.key)) {
+    makeDataEntry(e.key, template, mapArea, "MappingArea", document.querySelector("#deleteMapping"));
+    const code = convertKey(e.key);
+    settings.mappings.push({key: e.key, code: code});
+    await browser.storage.local.set(settings);
+  }
+  document.removeEventListener("keydown", updateMapping);
+  document.querySelector("#mappingMes").hidden = true;
+}
+
+async function changeListMode(){
+  const settings = await browser.storage.local.get();
+  if (settings.whitelist){
+    document.querySelector("#listMode").textContent = "Current Mode: Blacklist"
+  } else {
+    document.querySelector("#listMode").textContent = "Current Mode: Whitelist";
+  }
+  settings.whitelist = !settings.whitelist;
+  await browser.storage.local.set(settings);
+}
 
 async function playQuack(vol) {
   const url = browser.runtime.getURL("./Assets/Quacks/1.ogg");
@@ -274,4 +363,52 @@ async function playQuack(vol) {
   await quack.play();
 }
 
+function convertKey(key) {
+  let code;
+  if (key.length === 1) {
+    code = key.charCodeAt(0);
+  } else if (KEYDICT[key]) {
+    code = KEYDICT[key];
+  }
+  return code;
+}
+
 window.addEventListener("load", setup);
+
+const KEYDICT = {
+  "NumLock": 144,
+  "Escape": 27,
+  "F1": 112,
+  "F2": 113,
+  "F3": 114,
+  "F4": 115,
+  "F5": 116,
+  "F6": 117,
+  "F7": 118,
+  "F8": 119,
+  "F9": 120,
+  "F10": 121,
+  "F11": 122,
+  "F12": 123,
+  "PrintScreen": 44,
+  "Insert": 45,
+  "Delete": 46,
+  "Home": 36,
+  "End": 35,
+  "PageUp": 33,
+  "PageDown": 34,
+  "Backspace": 8,
+  "Tab": 9,
+  "Enter": 13,
+  "ArrowUp": 38,
+  "CapsLock": 20,
+  "ArrowLeft": 37,
+  "Clear": 12,
+  "ArrowRight": 39,
+  "Shift": 16,
+  "ArrowDown": 40,
+  "Control": 17,
+  "OS": 91,
+  "Meta": 91,
+  "Alt": 18,
+}

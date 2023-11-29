@@ -3,6 +3,12 @@ async function playQuack(mes) {
     return;
   }
   const settings = await browser.storage.local.get();
+  if (!(await searchMapping(settings.whitelist, mes.mes))) {
+    return;
+  }
+  if (await findBlockedUrl()) {
+    return;
+  }
   let quackCode;
   if (mes.mes === "unknown") {
     if (!settings.punctuation) {
@@ -38,23 +44,46 @@ async function playQuack(mes) {
   await quack.play();
 }
 
-async function injectScript(Id) {
+// For SOME reason moving the code in quackType to here results in quack type trigger N times each press where N
+// is how many times the page has changed without reload, e.g searching "test" on google then searching "test2" on the same tab
+// As such the mappings will just contain a code equivalent that is checked here
+// true mode is whitelist false mode is blacklist
+async function searchMapping(mode, code) {
+  const settings = await browser.storage.local.get();
+  let found = false;
+  for (let obj of settings.mappings) {
+    if (obj.code === code) {
+      found = true;
+    }
+  }
+  if (mode && found) {
+    return true;
+  } else if (mode && !found) {
+    return false;
+  } else return !mode && !found;
+}
+
+async function injectScript(Id, changeInfo) {
+  if (changeInfo.status !== "complete") {
+    return;
+  }
   if (await browser.permissions.contains({origins: ["<all_urls>"]})) {
-    const settings = await browser.storage.local.get();
-    let activeTab = await browser.tabs.query({active: true});
-    activeTab = activeTab[0];
-    console.log(activeTab.url, settings.filters.sites);
-    for (let url of settings.filters.sites){
-      if (activeTab.url.includes(url)) {
-        return;
-      }
-    }
-    if (settings.filters.pages.includes(activeTab.url)){
-      return;
-    }
     await browser.scripting.executeScript({files: ["quackType.js"], target: {tabId: Id}});
   }
 }
+
+async function findBlockedUrl() {
+  const settings = await browser.storage.local.get();
+  let activeTab = await browser.tabs.query({active: true});
+  activeTab = activeTab[0];
+  for (let url of settings.filters.sites) {
+    if (activeTab.url.includes(url)) {
+      return true;
+    }
+  }
+  return settings.filters.pages.includes(activeTab.url);
+}
+
 
 async function injectActiveTab(command) {
   let activeTab = await browser.tabs.query({active: true});
@@ -73,9 +102,12 @@ function removeQuacks() {
 }
 
 async function setUp() {
-  const storage = await browser.storage.local.get()
-  const settings = {volume: 0.5, letters: true, numbers: true, punctuation: true, mouse: false, random: false, filters: {pages: [], sites: []}}
-  const opts = ["volume", "letters", "numbers", "punctuation", "mouse", "random", "filters"];
+  const storage = await browser.storage.local.get();
+  const settings = {
+    volume: 0.5, letters: true, numbers: true, punctuation: true, mouse: false, random: false, whitelist: false,
+    filters: {pages: [], sites: []}, mappings: []
+  }
+  const opts = ["volume", "letters", "numbers", "punctuation", "mouse", "random", "filters", "mappings"];
   let updated;
   // On start verifies local storage is up to date and has not been tampered with, if it has sets values to default
   for (let opt of opts) {
@@ -87,8 +119,13 @@ async function setUp() {
         storage[opt] = settings[opt];
         updated = true;
       }
-    } else if (opt === "filters"){
-      if (!storage[opt].hasOwnProperty("pages") || !storage[opt].hasOwnProperty("sites")){
+    } else if (opt === "filters") {
+      if (!storage[opt].hasOwnProperty("pages") || !storage[opt].hasOwnProperty("sites")) {
+        storage[opt] = settings[opt];
+        updated = true;
+      }
+    } else if (opt === "mappings") {
+      if (storage[opt].isArray()) {
         storage[opt] = settings[opt];
         updated = true;
       }
@@ -108,5 +145,5 @@ async function setUp() {
 browser.runtime.onInstalled.addListener(setUp);
 browser.runtime.onStartup.addListener(setUp);
 browser.runtime.onMessage.addListener(playQuack);
-browser.tabs.onUpdated.addListener(injectScript);
+browser.tabs.onUpdated.addListener(injectScript, {properties: ["status"]});
 browser.commands.onCommand.addListener(injectActiveTab);
