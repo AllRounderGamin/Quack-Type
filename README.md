@@ -49,6 +49,18 @@ all currently highlighted url.
 - Blocking on a site should block all urls from the given site.
 
 
+#### Button Mapping
+
+Similar to url filtering, button mapping will allow you to choose any key to be added to the mappings list, you can then
+decide whether the extension should only trigger on these keys (whitelist) or not trigger on these keys (blacklist)
+
+This can be done simply by hitting "add filter" and then pressing the desired key when prompted, selecting and deleting 
+mappings works the same way as url filtering.
+
+Special buttons for Esc PrtSc and Alt have been added as they cannot be detected or pressed without the extension reacting
+this is unfortunately the best way to do this
+
+
 ## Note
 Sometimes the ogg file will not be recognised, this will result in the sound not playing and an error message in the
 console but the extension will continue working. This seems to be a Firefox issue and only tends to happen for the first
